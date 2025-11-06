@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '3.5.7'
+
+
+    project(":order")
+
+}
+
+
+test {
+    useJUnitPlatform()
+}
+subprojects {
+    apply {
+        plugin 'java'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+
+
+        implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '3.5.7'
+        compileOnly 'org.projectlombok:lombok:1.18.34'
+        annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+    }
+}
