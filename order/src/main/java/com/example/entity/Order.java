@@ -16,12 +16,10 @@ public class Order {
 
     @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_customer_id")
-    @JsonIgnoreProperties("orders")
     private  Customer customer;
 
     @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "product_product_id")
-    @JsonIgnoreProperties("orders")
     private Product product;
 
      public Order(String orderId) {
