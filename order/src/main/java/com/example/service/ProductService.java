@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 public class ProductService {
 
     public Product getProduct(String productId){
-        Product product1 = new Product("product1" , 100.0 , "food" , "tags");
-        return product1;
+         return new Product( "car" , 12345 , "carr" , "23tag");
     }
 
 }

@@ -1,15 +1,30 @@
 package com.example.entity;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
-@RequiredArgsConstructor
+
+@NoArgsConstructor
 @Getter
 @Setter
+@Entity
+@Table(name = "customer")
 public class Customer {
-    private final String name;
-    private final String street;
-    private final String zip;
-    private final String country;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id")
+    private Long customerId;
+
+    private  String name;
+    private  String street;
+    private  String zip;
+    private  String country;
+
+
+    public Customer( String name, String street, String zip, String country) {
+        this.name = name;
+        this.street = street;
+        this.zip = zip;
+        this.country = country;
+    }
 }

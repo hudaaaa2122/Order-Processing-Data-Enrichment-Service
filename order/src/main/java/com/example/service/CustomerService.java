@@ -8,7 +8,7 @@ public class CustomerService {
 
 
     public Customer getCustomer(String customerId){
-        Customer customer1=new Customer("huda" , "farooq colony street no 10" , "6350" , "pakistan");
-        return customer1;
+        return new Customer("huda", "farooq colony street no 10", "6350", "pakistan");
+
     }
 }
