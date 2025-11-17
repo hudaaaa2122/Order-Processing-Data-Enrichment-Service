@@ -21,18 +21,12 @@ public class Order {
     private String CustomerId;
     private String  ProductId;
 
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_customer_id")
-    private  Customer customer;
-
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_product_id")
+    @Transient
+    private Customer customer;
+    @Transient
     private Product product;
-
 
     public Order(String orderId) {
          this.orderId = orderId;
     }
-
-
 }

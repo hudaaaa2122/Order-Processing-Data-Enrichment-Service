@@ -7,14 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-@Table(name = "customer")
 public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
-    private Long customerId;
-
     private  String name;
     private  String street;
     private  String zip;
