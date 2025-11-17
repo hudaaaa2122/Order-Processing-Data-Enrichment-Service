@@ -18,8 +18,8 @@ public class Order {
     private  String orderId;
 
     private Date timestamp;
-    private String CustomerId;
-    private String  ProductId;
+    private String customerId;
+    private String  productId;
 
    private String customerName;
    private String customerStreet;
