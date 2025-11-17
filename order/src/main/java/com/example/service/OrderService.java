@@ -15,14 +15,22 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     public Order getOrderById (String orderId){
-            Order order = new Order(orderId);
-            order.setCustomer(customerService.getCustomer(orderId));
-            order.setProduct(productService.getProduct(orderId));
-            return orderRepository.save(order);
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
+        if (order == null) {return null;}
+        Customer Customer = customerService.getCustomer(order.getCustomerId());
+        Product Product = productService.getProduct(order.getProductId());
+        order.setCustomer(Customer);
+        order.setProduct(Product);
+        order.setTimestamp(order.getTimestamp());
+        return order;
         }
 
-    public OrderRequest processOrder(OrderRequest payload) {
-        return payload;
+    public Order processOrder(OrderRequest payload) {
+        Order order = new Order(payload.getOrderId());
+        order.setCustomerId(payload.getCustomerId());
+        order.setProductId(payload.getProductId());
+        order.setTimestamp(payload.getTimestamp());
+        return orderRepository.save(order);
     }
 }
 

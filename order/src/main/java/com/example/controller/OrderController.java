@@ -17,9 +17,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderRequest recieveOrder(@RequestBody final OrderRequest payload) {
-        OrderRequest orderProcessing = orderService.processOrder(payload);
-        return orderProcessing;
+    public Order recieveOrder(@RequestBody final OrderRequest payload) {
+        return orderService.processOrder(payload);
     }
 
     @GetMapping("/{orderId}")

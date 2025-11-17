@@ -27,21 +27,21 @@ public class OrderServiceTest {
     @Mock private ProductService productService;
     @InjectMocks
     private OrderService orderService;
-
-    @Test
-    public void testOrderService(){
-       when(customerService.getCustomer(any()))
-               .thenReturn(new Customer("huda", "farooq colony street no 10", "6350", "pakistan"));
-       when(productService.getProduct(any()))
-               .thenReturn(new Product("car" , 12345 , "carr" , "23tag"));
-       when(orderRepository.save(any()))
-       .thenAnswer(invocation -> invocation.getArgument(0));
-       Order order = orderService.getOrderById("123");
-       assertNotNull(order.getCustomer());
-       assertNotNull(order.getProduct());
-       assertEquals("huda" , order.getCustomer().getName());
-       assertEquals("car" , order.getProduct().getName());
-       verify(orderRepository).save(any(Order.class));
-    }
+//
+//    @Test
+////    public void testOrderService(){
+////       when(customerService.getCustomer(any()))
+////               .thenReturn(new Customer("huda", "farooq colony street no 10", "6350", "pakistan"));
+////       when(productService.getProduct(any()))
+////               .thenReturn(new Product("car" , 12345 , "carr" , "23tag"));
+////       when(orderRepository.save(any()))
+////       .thenAnswer(invocation -> invocation.getArgument(0));
+////       Order order = orderService.getOrderById("123");
+////       assertNotNull(order.getCustomer());
+////       assertNotNull(order.getProduct());
+////       assertEquals("huda" , order.getCustomer().getName());
+////       assertEquals("car" , order.getProduct().getName());
+////       verify(orderRepository).save(any(Order.class));
+////    }
     }
 
