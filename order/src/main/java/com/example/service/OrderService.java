@@ -17,10 +17,19 @@ public class OrderService {
     public Order getOrderById (String orderId){
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
         Customer customer = customerService.getCustomer(order.getCustomerId());
-        order.setCustomer(customer);
+        if (customer != null) {
+            order.setCustomerName(customer.getName());
+            order.setCustomerStreet(customer.getStreet());
+            order.setCustomerZip(customer.getZip());
+            order.setCustomerCountry(customer.getCountry());
+        }
         Product product =productService.getProduct(order.getProductId());
-        order.setProduct(product);
-
+        if (product != null) {
+            order.setProductName(product.getName());
+            order.setProductPrice(product.getPrice());
+            order.setProductCategory(product.getCategory());
+            order.setProductTags(product.getTags());
+        }
         return order;
         }
 

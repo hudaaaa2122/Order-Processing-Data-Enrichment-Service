@@ -21,12 +21,20 @@ public class Order {
     private String CustomerId;
     private String  ProductId;
 
-    @Transient
-    private Customer customer;
-    @Transient
-    private Product product;
+   private String customerName;
+   private String customerStreet;
+   private String customerZip;
+   private String customerCountry;
+
+    private String productName;
+    private double productPrice;
+    private String productCategory;
+    private String productTags;
+
 
     public Order(String orderId) {
          this.orderId = orderId;
     }
+
+
 }
