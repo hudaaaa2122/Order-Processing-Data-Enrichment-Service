@@ -17,7 +17,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderRequest recieveOrder(@RequestBody final OrderRequest payload) {
+    public OrderRequest recieveOrder(@RequestBody final Order payload) {
         return orderService.processOrder(payload);
     }
 

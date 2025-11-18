@@ -33,14 +33,18 @@ public class OrderService {
         return order;
         }
 
-    public OrderRequest processOrder(OrderRequest payload) {
+    public OrderRequest processOrder(Order payload) {
         Order order = new Order();
-        order.setCustomerId(payload.getCustomerId());
-        order.setProductId(payload.getProductId());
         order.setOrderId(payload.getOrderId());
-        order.setTimestamp(payload.getTimestamp());
-        orderRepository.save(order);
-        return payload;
+        Order  saveOrder = orderRepository.save(order);
+
+        OrderRequest orderRequest = new OrderRequest();
+        orderRequest.setOrderId(saveOrder.getOrderId());
+        orderRequest.setCustomerId(saveOrder.getCustomerId());
+        orderRequest.setProductId(saveOrder.getProductId());
+        orderRequest.setTimestamp(saveOrder.getTimestamp());
+
+        return orderRequest;
     }
 }
 
