@@ -1,4 +1,4 @@
-package com.example.entity;
+package com.example.dto;
 
 import lombok.*;
 
@@ -12,6 +12,6 @@ public class OrderRequest {
     private String orderId;
     private String customerId;
     private String productId;
-    private Date timestamp;
+    private String  timestamp;
 
 }

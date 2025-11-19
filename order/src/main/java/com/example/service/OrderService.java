@@ -1,8 +1,10 @@
 package com.example.service;
 
+import com.example.dto.OrderDetails;
+import com.example.dto.OrderResponse;
 import com.example.entity.Customer;
 import com.example.entity.Order;
-import com.example.entity.OrderRequest;
+import com.example.dto.OrderRequest;
 import com.example.entity.Product;
 import com.example.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,37 +16,46 @@ public class OrderService {
     private final ProductService productService;
     private final OrderRepository orderRepository;
 
-    public Order getOrderById (String orderId){
+    public OrderDetails getOrderById (String orderId){
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
-        Customer customer = customerService.getCustomer(order.getCustomerId());
-        if (customer != null) {
-            order.setCustomerName(customer.getName());
-            order.setCustomerStreet(customer.getStreet());
-            order.setCustomerZip(customer.getZip());
-            order.setCustomerCountry(customer.getCountry());
-        }
+
         Product product =productService.getProduct(order.getProductId());
-        if (product != null) {
-            order.setProductName(product.getName());
-            order.setProductPrice(product.getPrice());
-            order.setProductCategory(product.getCategory());
-            order.setProductTags(product.getTags());
-        }
-        return order;
+        Customer customer = customerService.getCustomer(order.getCustomerId());
+
+        OrderDetails response = new OrderDetails();
+        response.setOrderId(order.getOrderId());
+        response.setTimestamp(order.getTimestamp());
+
+        response.setCustomerId(order.getCustomerId());
+        response.setCustomerName(customer.getName());
+        response.setCustomerStreet(customer.getStreet());
+        response.setCustomerZip(customer.getZip());
+        response.setCustomerCountry(customer.getCountry());
+
+        response.setProductId(order.getProductId());
+        response.setProductName(product.getName());
+        response.setProductPrice(product.getPrice());
+        response.setProductCategory(product.getCategory());
+        response.setProductTags(product.getTags());
+
+        return response;
         }
 
-    public OrderRequest processOrder(Order payload) {
+    public OrderResponse processOrder(OrderRequest payload) {
         Order order = new Order();
         order.setOrderId(payload.getOrderId());
-        Order  saveOrder = orderRepository.save(order);
+        order.setCustomerId(payload.getCustomerId());
+        order.setProductId(payload.getProductId());
+        order.setTimestamp(payload.getTimestamp());
+        orderRepository.save(order);
 
-        OrderRequest orderRequest = new OrderRequest();
-        orderRequest.setOrderId(saveOrder.getOrderId());
-        orderRequest.setCustomerId(saveOrder.getCustomerId());
-        orderRequest.setProductId(saveOrder.getProductId());
-        orderRequest.setTimestamp(saveOrder.getTimestamp());
+        OrderResponse response = new OrderResponse();
+        response.setOrderId(payload.getOrderId());
+        response.setTimestamp(order.getTimestamp());
+        response.setCustomerId(order.getCustomerId());
+        response.setProductId(order.getProductId());
 
-        return orderRequest;
+        return response;
     }
 }
 

@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 public class Customer {
+    private String id;
     private  String name;
     private  String street;
     private  String zip;
@@ -19,5 +20,6 @@ public class Customer {
         this.street = street;
         this.zip = zip;
         this.country = country;
+
     }
 }

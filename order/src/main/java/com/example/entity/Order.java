@@ -16,25 +16,7 @@ import java.util.Date;
 public class Order {
     @Id
     private  String orderId;
-
-    private Date timestamp;
+    private String timestamp;
     private String customerId;
     private String  productId;
-
-   private String customerName;
-   private String customerStreet;
-   private String customerZip;
-   private String customerCountry;
-
-    private String productName;
-    private double productPrice;
-    private String productCategory;
-    private String productTags;
-
-
-    public Order(String orderId) {
-         this.orderId = orderId;
-    }
-
-
 }
