@@ -8,6 +8,7 @@ import com.example.dto.OrderRequest;
 import com.example.entity.Product;
 import com.example.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
@@ -19,43 +20,64 @@ public class OrderService {
     public OrderDetails getOrderById (String orderId){
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
 
-        Product product =productService.getProduct(order.getProductId());
-        Customer customer = customerService.getCustomer(order.getCustomerId());
-
         OrderDetails response = new OrderDetails();
-        response.setOrderId(order.getOrderId());
-        response.setTimestamp(order.getTimestamp());
-
-        response.setCustomerId(order.getCustomerId());
-        response.setCustomerName(customer.getName());
-        response.setCustomerStreet(customer.getStreet());
-        response.setCustomerZip(customer.getZip());
-        response.setCustomerCountry(customer.getCountry());
-
-        response.setProductId(order.getProductId());
-        response.setProductName(product.getName());
-        response.setProductPrice(product.getPrice());
-        response.setProductCategory(product.getCategory());
-        response.setProductTags(product.getTags());
-
+        BeanUtils.copyProperties(order , response);
         return response;
+//        response.setOrderId(order.getOrderId());
+//        response.setTimestamp(order.getTimestamp());
+//
+//        response.setCustomerId(order.getCustomerId());
+//        response.setCustomerName(order.getCustomerName());
+//        response.setCustomerStreet(order.getCustomerStreet());
+//        response.setCustomerZip(order.getCustomerZip());
+//        response.setCustomerCountry(order.getCustomerCountry());
+//
+//        response.setProductId(order.getProductId());
+//        response.setProductName(order.getProductName());
+//        response.setProductPrice(order.getProductPrice());
+//        response.setProductCategory(order.getProductCategory());
+//        response.setProductTags(order.getProductTags());
         }
 
-    public OrderResponse processOrder(OrderRequest payload) {
+    public OrderDetails processOrder(OrderDetails payload) {
         Order order = new Order();
-        order.setOrderId(payload.getOrderId());
-        order.setCustomerId(payload.getCustomerId());
-        order.setProductId(payload.getProductId());
-        order.setTimestamp(payload.getTimestamp());
+        BeanUtils.copyProperties(payload , order);
         orderRepository.save(order);
-
-        OrderResponse response = new OrderResponse();
-        response.setOrderId(payload.getOrderId());
-        response.setTimestamp(order.getTimestamp());
-        response.setCustomerId(order.getCustomerId());
-        response.setProductId(order.getProductId());
-
+        OrderDetails response = new OrderDetails();
+        BeanUtils.copyProperties(order , response);
         return response;
+//        order.setOrderId(payload.getOrderId());
+//        order.setTimestamp(payload.getTimestamp());
+//
+//        order.setCustomerId(payload.getCustomerId());
+//        order.setCustomerName(payload.getCustomerName());
+//        order.setCustomerStreet(payload.getCustomerStreet());
+//        order.setCustomerZip(payload.getCustomerZip());
+//        order.setCustomerCountry(payload.getCustomerCountry());
+//
+//        order.setProductId(payload.getProductId());
+//        order.setProductName(payload.getProductName());
+//        order.setProductPrice(payload.getProductPrice());
+//        order.setProductCategory(payload.getProductCategory());
+//        order.setProductTags(payload.getProductTags());
+
+
+//        response.setOrderId(payload.getOrderId());
+//        response.setTimestamp(payload.getTimestamp());
+//
+//        response.setCustomerId(payload.getCustomerId());
+//        response.setCustomerZip(payload.getCustomerZip());
+//        response.setCustomerCountry(payload.getCustomerCountry());
+//        response.setCustomerStreet(payload.getCustomerStreet());
+//        response.setCustomerName(payload.getCustomerName());
+//
+//
+//        response.setProductName(payload.getProductName());
+//        response.setProductPrice(payload.getProductPrice());
+//        response.setProductCategory(payload.getProductCategory());
+//        response.setProductTags(payload.getProductTags());
+//        response.setProductId(payload.getProductId());
+
     }
 }
 

@@ -17,6 +17,16 @@ public class Order {
     @Id
     private  String orderId;
     private String timestamp;
+
     private String customerId;
-    private String  productId;
+    private String customerName;
+    private String customerStreet;
+    private String customerZip;
+    private String customerCountry;
+
+    private String productId;
+    private String productName;
+    private Double productPrice;
+    private String productCategory;
+    private String productTags;
 }

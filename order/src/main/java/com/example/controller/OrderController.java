@@ -19,7 +19,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderResponse createOrder(@RequestBody final OrderRequest payload) {
+    public OrderDetails createOrder(@RequestBody final OrderDetails payload) {
         return orderService.processOrder(payload);
     }
 
