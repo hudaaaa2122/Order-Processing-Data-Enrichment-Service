@@ -8,7 +8,15 @@ public class CustomerService {
 
 
     public Customer getCustomer(String customerId){
-        return new Customer("huda", "farooq colony street no 10", "6350", "pakistan");
+
+        Customer customer = new Customer();
+        customer.setId(customerId);
+        customer.setName("huda");
+        customer.setStreet("Street 1");
+        customer.setZip("12345");
+        customer.setCountry("Germany");
+
+        return customer;
 
     }
 }

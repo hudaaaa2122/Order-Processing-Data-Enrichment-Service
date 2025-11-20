@@ -14,12 +14,5 @@ public class Customer {
     private  String zip;
     private  String country;
 
-
-    public Customer( String name, String street, String zip, String country) {
-        this.name = name;
-        this.street = street;
-        this.zip = zip;
-        this.country = country;
-
     }
-}
+

@@ -7,7 +7,13 @@ import org.springframework.stereotype.Service;
 public class ProductService {
 
     public Product getProduct(String productId){
-         return new Product( "car" , 12345 , "carr" , "23tag");
+         Product product = new Product();
+         product.setId(productId);
+         product.setName("Product ");
+         product.setPrice(100.0);
+         product.setCategory("Category ");
+         product.setTags("Tag ");
+         return product;
     }
 
 }

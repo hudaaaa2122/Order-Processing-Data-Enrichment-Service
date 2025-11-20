@@ -16,10 +16,4 @@ public class Product {
     private  String category;
     private  String tags;
 
-    public Product(String name, double price, String category, String tags) {
-        this.name = name;
-        this.price = price;
-        this.category = category;
-        this.tags = tags;
-    }
 }

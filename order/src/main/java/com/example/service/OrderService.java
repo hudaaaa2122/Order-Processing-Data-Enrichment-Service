@@ -21,62 +21,68 @@ public class OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
 
         OrderDetails response = new OrderDetails();
-        BeanUtils.copyProperties(order , response);
+        response.setOrderId(order.getOrderId());
+        response.setTimestamp(order.getTimestamp());
+
+        response.setCustomerId(order.getCustomerId());
+        response.setCustomerName(order.getCustomerName());
+        response.setCustomerStreet(order.getCustomerStreet());
+        response.setCustomerZip(order.getCustomerZip());
+        response.setCustomerCountry(order.getCustomerCountry());
+
+        response.setProductId(order.getProductId());
+        response.setProductName(order.getProductName());
+        response.setProductPrice(order.getProductPrice());
+        response.setProductCategory(order.getProductCategory());
+        response.setProductTags(order.getProductTags());
+
         return response;
-//        response.setOrderId(order.getOrderId());
-//        response.setTimestamp(order.getTimestamp());
-//
-//        response.setCustomerId(order.getCustomerId());
-//        response.setCustomerName(order.getCustomerName());
-//        response.setCustomerStreet(order.getCustomerStreet());
-//        response.setCustomerZip(order.getCustomerZip());
-//        response.setCustomerCountry(order.getCustomerCountry());
-//
-//        response.setProductId(order.getProductId());
-//        response.setProductName(order.getProductName());
-//        response.setProductPrice(order.getProductPrice());
-//        response.setProductCategory(order.getProductCategory());
-//        response.setProductTags(order.getProductTags());
-        }
+
+    }
 
     public OrderDetails processOrder(OrderDetails payload) {
+
+        Customer customer = customerService.getCustomer(payload.getCustomerId());
+        Product product = productService.getProduct(payload.getProductId());
         Order order = new Order();
-        BeanUtils.copyProperties(payload , order);
+
+        order.setOrderId(payload.getOrderId());
+        order.setTimestamp(payload.getTimestamp());
+
+        order.setCustomerId(customer.getId());
+        order.setCustomerName(customer.getName());
+        order.setCustomerStreet(customer.getStreet());
+        order.setCustomerZip(customer.getZip());
+        order.setCustomerCountry(customer.getCountry());
+
+        order.setProductId(product.getId());
+        order.setProductName(product.getName());
+        order.setProductPrice(product.getPrice());
+        order.setProductCategory(product.getCategory());
+        order.setProductTags(product.getTags());
+
         orderRepository.save(order);
+
         OrderDetails response = new OrderDetails();
-        BeanUtils.copyProperties(order , response);
+
+
+        response.setOrderId(payload.getOrderId());
+        response.setTimestamp(payload.getTimestamp());
+
+        response.setCustomerId(customer.getId());
+        response.setCustomerZip(customer.getZip());
+        response.setCustomerCountry(customer.getCountry());
+        response.setCustomerStreet(customer.getStreet());
+        response.setCustomerName(customer.getName());
+
+
+        response.setProductName(product.getName());
+        response.setProductPrice(product.getPrice());
+        response.setProductCategory(product.getCategory());
+        response.setProductTags(product.getTags());
+        response.setProductId(product.getId());
+
         return response;
-//        order.setOrderId(payload.getOrderId());
-//        order.setTimestamp(payload.getTimestamp());
-//
-//        order.setCustomerId(payload.getCustomerId());
-//        order.setCustomerName(payload.getCustomerName());
-//        order.setCustomerStreet(payload.getCustomerStreet());
-//        order.setCustomerZip(payload.getCustomerZip());
-//        order.setCustomerCountry(payload.getCustomerCountry());
-//
-//        order.setProductId(payload.getProductId());
-//        order.setProductName(payload.getProductName());
-//        order.setProductPrice(payload.getProductPrice());
-//        order.setProductCategory(payload.getProductCategory());
-//        order.setProductTags(payload.getProductTags());
-
-
-//        response.setOrderId(payload.getOrderId());
-//        response.setTimestamp(payload.getTimestamp());
-//
-//        response.setCustomerId(payload.getCustomerId());
-//        response.setCustomerZip(payload.getCustomerZip());
-//        response.setCustomerCountry(payload.getCustomerCountry());
-//        response.setCustomerStreet(payload.getCustomerStreet());
-//        response.setCustomerName(payload.getCustomerName());
-//
-//
-//        response.setProductName(payload.getProductName());
-//        response.setProductPrice(payload.getProductPrice());
-//        response.setProductCategory(payload.getProductCategory());
-//        response.setProductTags(payload.getProductTags());
-//        response.setProductId(payload.getProductId());
 
     }
 }
