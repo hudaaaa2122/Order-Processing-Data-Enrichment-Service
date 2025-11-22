@@ -12,6 +12,6 @@ public class OrderRequest {
     private String orderId;
     private String customerId;
     private String productId;
-    private String  timestamp;
+    private String timestamp;
 
 }

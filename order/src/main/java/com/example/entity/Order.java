@@ -15,7 +15,7 @@ import java.util.Date;
 @Table(name = "orders")
 public class Order {
     @Id
-    private  String orderId;
+    private String orderId;
     private String timestamp;
 
     private String customerId;

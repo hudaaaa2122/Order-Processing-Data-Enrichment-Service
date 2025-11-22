@@ -10,10 +10,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Product {
-    private  String id;
-    private  String name;
-    private  double price;
-    private  String category;
-    private  String tags;
+    private String id;
+    private String name;
+    private double price;
+    private String category;
+    private String tags;
 
 }

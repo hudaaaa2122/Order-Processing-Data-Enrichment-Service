@@ -10,6 +10,7 @@ import com.example.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
 @RequiredArgsConstructor
 @Service
 public class OrderService {
@@ -17,7 +18,7 @@ public class OrderService {
     private final ProductService productService;
     private final OrderRepository orderRepository;
 
-    public OrderDetails getOrderById (String orderId){
+    public OrderDetails getOrderById(String orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
 
         OrderDetails response = new OrderDetails();

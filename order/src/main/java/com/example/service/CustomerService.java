@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
 
 
-    public Customer getCustomer(String customerId){
+    public Customer getCustomer(String customerId) {
 
         Customer customer = new Customer();
         customer.setId(customerId);
