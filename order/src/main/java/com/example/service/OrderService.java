@@ -1,14 +1,12 @@
 package com.example.service;
 
-import com.example.dto.OrderDetails;
+import com.example.dto.OrderRequest;
 import com.example.dto.OrderResponse;
 import com.example.entity.Customer;
 import com.example.entity.Order;
-import com.example.dto.OrderRequest;
 import com.example.entity.Product;
 import com.example.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -18,10 +16,10 @@ public class OrderService {
     private final ProductService productService;
     private final OrderRepository orderRepository;
 
-    public OrderDetails getOrderById(String orderId) {
+    public OrderResponse getOrderById(String orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
 
-        OrderDetails response = new OrderDetails();
+        OrderResponse response = new OrderResponse();
         response.setOrderId(order.getOrderId());
         response.setTimestamp(order.getTimestamp());
 
@@ -41,31 +39,29 @@ public class OrderService {
 
     }
 
-    public OrderDetails processOrder(OrderDetails payload) {
+    public OrderResponse processOrder(OrderRequest payload) {
 
+        Order order = new Order();
+        OrderResponse response = new OrderResponse();
         Customer customer = customerService.getCustomer(payload.getCustomerId());
         Product product = productService.getProduct(payload.getProductId());
-        Order order = new Order();
 
         order.setOrderId(payload.getOrderId());
         order.setTimestamp(payload.getTimestamp());
 
-        order.setCustomerId(customer.getId());
+        order.setCustomerId(payload.getCustomerId());
         order.setCustomerName(customer.getName());
         order.setCustomerStreet(customer.getStreet());
         order.setCustomerZip(customer.getZip());
         order.setCustomerCountry(customer.getCountry());
 
-        order.setProductId(product.getId());
+        order.setProductId(payload.getProductId());
         order.setProductName(product.getName());
         order.setProductPrice(product.getPrice());
         order.setProductCategory(product.getCategory());
         order.setProductTags(product.getTags());
 
         orderRepository.save(order);
-
-        OrderDetails response = new OrderDetails();
-
 
         response.setOrderId(payload.getOrderId());
         response.setTimestamp(payload.getTimestamp());
