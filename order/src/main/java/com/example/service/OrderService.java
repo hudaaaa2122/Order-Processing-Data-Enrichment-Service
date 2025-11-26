@@ -22,7 +22,13 @@ public class OrderService {
         return toResponse(order);
     }
 
-    public OrderResponse processOrder(OrderRequest payload) {
+    public OrderResponse processOrder( OrderRequest payload) {
+        Order savedOrder = orderRepository.save(toOrder(payload));
+        return toResponse(savedOrder);
+    }
+
+
+    public Order toOrder (OrderRequest payload ){
 
         Order order = new Order();
         Customer customer = customerService.getCustomer(payload.getCustomerId());
@@ -44,10 +50,7 @@ public class OrderService {
         order.setProductCategory(product.getCategory());
         order.setProductTags(product.getTags());
 
-        Order savedOrder = orderRepository.save(order);
-
-        return toResponse(savedOrder);
-
+        return order;
     }
 
     public OrderResponse  toResponse(Order order) {

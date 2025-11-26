@@ -15,7 +15,6 @@ import java.util.Date;
 @Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String orderId;
     private String timestamp;
 
@@ -30,6 +29,9 @@ public class Order {
     private Double productPrice;
     private String productCategory;
     private String productTags;
+
+    @Version
+    private Long version;
 
 
 }
