@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 public class Customer {

@@ -1,8 +1,10 @@
 package com.example.service;
 
 import com.example.entity.Customer;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class CustomerService {
 
