@@ -17,7 +17,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     public OrderResponse getOrderById(String orderId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
         return toResponse(order);
     }
 
@@ -30,6 +31,7 @@ public class OrderService {
         order.setOrderId(payload.getOrderId());
         order.setTimestamp(payload.getTimestamp());
 
+        order.setProductId(payload.getProductId());
         order.setCustomerId(payload.getCustomerId());
         order.setCustomerZip(customer.getZip());
         order.setCustomerCountry(customer.getCountry());
@@ -41,7 +43,6 @@ public class OrderService {
         order.setProductPrice(product.getPrice());
         order.setProductCategory(product.getCategory());
         order.setProductTags(product.getTags());
-        order.setProductId(payload.getProductId());
 
         Order savedOrder = orderRepository.save(order);
 
