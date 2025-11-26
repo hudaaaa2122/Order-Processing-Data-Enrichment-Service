@@ -18,8 +18,40 @@ public class OrderService {
 
     public OrderResponse getOrderById(String orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
+        return toResponse(order);
+    }
 
+    public OrderResponse processOrder(OrderRequest payload) {
+
+        Order order = new Order();
+        Customer customer = customerService.getCustomer(payload.getCustomerId());
+        Product product = productService.getProduct(payload.getProductId());
+
+        order.setOrderId(payload.getOrderId());
+        order.setTimestamp(payload.getTimestamp());
+
+        order.setCustomerId(payload.getCustomerId());
+        order.setCustomerZip(customer.getZip());
+        order.setCustomerCountry(customer.getCountry());
+        order.setCustomerStreet(customer.getStreet());
+        order.setCustomerName(customer.getName());
+
+
+        order.setProductName(product.getName());
+        order.setProductPrice(product.getPrice());
+        order.setProductCategory(product.getCategory());
+        order.setProductTags(product.getTags());
+        order.setProductId(payload.getProductId());
+
+        Order savedOrder = orderRepository.save(order);
+
+        return toResponse(savedOrder);
+
+    }
+
+    public OrderResponse  toResponse(Order order) {
         OrderResponse response = new OrderResponse();
+
         response.setOrderId(order.getOrderId());
         response.setTimestamp(order.getTimestamp());
 
@@ -36,51 +68,6 @@ public class OrderService {
         response.setProductTags(order.getProductTags());
 
         return response;
-
-    }
-
-    public OrderResponse processOrder(OrderRequest payload) {
-
-        Order order = new Order();
-        OrderResponse response = new OrderResponse();
-        Customer customer = customerService.getCustomer(payload.getCustomerId());
-        Product product = productService.getProduct(payload.getProductId());
-
-        order.setOrderId(payload.getOrderId());
-        order.setTimestamp(payload.getTimestamp());
-
-        order.setCustomerId(payload.getCustomerId());
-        order.setCustomerName(customer.getName());
-        order.setCustomerStreet(customer.getStreet());
-        order.setCustomerZip(customer.getZip());
-        order.setCustomerCountry(customer.getCountry());
-
-        order.setProductId(payload.getProductId());
-        order.setProductName(product.getName());
-        order.setProductPrice(product.getPrice());
-        order.setProductCategory(product.getCategory());
-        order.setProductTags(product.getTags());
-
-        orderRepository.save(order);
-
-        response.setOrderId(payload.getOrderId());
-        response.setTimestamp(payload.getTimestamp());
-
-        response.setCustomerId(customer.getId());
-        response.setCustomerZip(customer.getZip());
-        response.setCustomerCountry(customer.getCountry());
-        response.setCustomerStreet(customer.getStreet());
-        response.setCustomerName(customer.getName());
-
-
-        response.setProductName(product.getName());
-        response.setProductPrice(product.getPrice());
-        response.setProductCategory(product.getCategory());
-        response.setProductTags(product.getTags());
-        response.setProductId(product.getId());
-
-        return response;
-
     }
 }
 
