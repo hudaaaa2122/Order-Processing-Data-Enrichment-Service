@@ -7,12 +7,13 @@ import lombok.*;
 @RequiredArgsConstructor
 @Getter
 @Setter
+@Embeddable
 public class Customer {
-    private String id;
-    private String name;
-    private String street;
-    private String zip;
-    private String country;
+    private String cId;
+    private String customerName;
+    private String customerStreet;
+    private String customerZip;
+    private String customerCountry;
 
 }
 

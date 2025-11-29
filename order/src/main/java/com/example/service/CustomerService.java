@@ -12,11 +12,11 @@ public class CustomerService {
     public Customer getCustomer(String customerId) {
 
         Customer customer = new Customer();
-        customer.setId(customerId);
-        customer.setName("huda");
-        customer.setStreet("Street 1");
-        customer.setZip("12345");
-        customer.setCountry("Germany");
+        customer.setCId(customerId);
+        customer.setCustomerName("huda");
+        customer.setCustomerStreet("Street 1");
+        customer.setCustomerZip("12345");
+        customer.setCustomerCountry("Germany");
 
         return customer;
 

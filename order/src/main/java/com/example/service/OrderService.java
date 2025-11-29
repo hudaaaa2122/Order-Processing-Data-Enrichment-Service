@@ -23,7 +23,11 @@ public class OrderService {
     }
 
     public OrderResponse processOrder( OrderRequest payload) {
-        Order savedOrder = orderRepository.save(toOrder(payload));
+        Order order = toOrder(payload);
+        Customer customer = customerService.getCustomer(payload.getCustomerId());
+        Product product = productService.getProduct(payload.getProductId());
+        enrichOrder(order , customer , product);
+        Order savedOrder = orderRepository.save(order);
         return toResponse(savedOrder);
     }
 
@@ -31,26 +35,15 @@ public class OrderService {
     public Order toOrder (OrderRequest payload ){
 
         Order order = new Order();
-        Customer customer = customerService.getCustomer(payload.getCustomerId());
-        Product product = productService.getProduct(payload.getProductId());
 
         order.setOrderId(payload.getOrderId());
         order.setTimestamp(payload.getTimestamp());
-
-        order.setProductId(payload.getProductId());
-        order.setCustomerId(payload.getCustomerId());
-        order.setCustomerZip(customer.getZip());
-        order.setCustomerCountry(customer.getCountry());
-        order.setCustomerStreet(customer.getStreet());
-        order.setCustomerName(customer.getName());
-
-
-        order.setProductName(product.getName());
-        order.setProductPrice(product.getPrice());
-        order.setProductCategory(product.getCategory());
-        order.setProductTags(product.getTags());
-
         return order;
+    }
+    public void enrichOrder(Order order , Customer customer , Product product){
+        order.setCustomer(customer);
+        order.setProduct(product);
+
     }
 
     public OrderResponse  toResponse(Order order) {
@@ -59,17 +52,20 @@ public class OrderService {
         response.setOrderId(order.getOrderId());
         response.setTimestamp(order.getTimestamp());
 
-        response.setCustomerId(order.getCustomerId());
-        response.setCustomerName(order.getCustomerName());
-        response.setCustomerStreet(order.getCustomerStreet());
-        response.setCustomerZip(order.getCustomerZip());
-        response.setCustomerCountry(order.getCustomerCountry());
-
-        response.setProductId(order.getProductId());
-        response.setProductName(order.getProductName());
-        response.setProductPrice(order.getProductPrice());
-        response.setProductCategory(order.getProductCategory());
-        response.setProductTags(order.getProductTags());
+        if (order.getCustomer() != null) {
+            response.setCustomerId(order.getCustomer().getCId());
+            response.setCustomerName(order.getCustomer().getCustomerName());
+            response.setCustomerStreet(order.getCustomer().getCustomerStreet());
+            response.setCustomerZip(order.getCustomer().getCustomerZip());
+            response.setCustomerCountry(order.getCustomer().getCustomerCountry());
+        }
+        if (order.getProduct() != null) {
+            response.setProductId(order.getProduct().getPId());
+            response.setProductName(order.getProduct().getProductName());
+            response.setProductPrice(order.getProduct().getProductPrice());
+            response.setProductCategory(order.getProduct().getProductCategory());
+            response.setProductTags(order.getProduct().getProductTags());
+        }
 
         return response;
     }

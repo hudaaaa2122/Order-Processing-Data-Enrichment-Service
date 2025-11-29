@@ -9,12 +9,13 @@ import org.springframework.stereotype.Service;
 public class ProductService {
 
     public Product getProduct(String productId) {
+
         Product product = new Product();
-        product.setId(productId);
-        product.setName("Product ");
-        product.setPrice(100.0);
-        product.setCategory("Category ");
-        product.setTags("Tag ");
+        product.setPId(productId);
+        product.setProductName("Product ");
+        product.setProductPrice(100.0);
+        product.setProductCategory("Category ");
+        product.setProductTags("Tag ");
         return product;
     }
 

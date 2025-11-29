@@ -1,12 +1,9 @@
 package com.example.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
 
 @RequiredArgsConstructor
 @Getter
@@ -18,20 +15,10 @@ public class Order {
     private String orderId;
     private String timestamp;
 
-    private String customerId;
-    private String customerName;
-    private String customerStreet;
-    private String customerZip;
-    private String customerCountry;
+    @Embedded
+    private Customer customer;
 
-    private String productId;
-    private String productName;
-    private Double productPrice;
-    private String productCategory;
-    private String productTags;
-
-    @Version
-    private Long version;
-
+    @Embedded
+    private Product product;
 
 }
