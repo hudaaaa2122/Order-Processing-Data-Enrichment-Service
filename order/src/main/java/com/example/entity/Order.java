@@ -14,6 +14,8 @@ public class Order {
     @Id
     private String orderId;
     private String timestamp;
+    private String customerId;
+    private String productId;
 
     @Embedded
     private Customer customer;
