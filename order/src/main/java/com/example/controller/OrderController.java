@@ -5,7 +5,11 @@ import com.example.dto.OrderResponse;
 import com.example.entity.Order;
 import com.example.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -16,24 +20,40 @@ public class OrderController {
 
     @PostMapping
     public OrderResponse createOrder(@RequestBody final OrderRequest payload) {
+
         Order order = new Order();
         order.setOrderId(payload.getOrderId());
         order.setTimestamp(payload.getTimestamp());
         order.setCustomerId(payload.getCustomerId());
         order.setProductId(payload.getProductId());
+
         Order saved = orderService.processOrder(order);
+
         return getOrderResponse(saved);
     }
+
     @GetMapping("/{orderId}")
     public OrderResponse getOrder(@PathVariable("orderId") final String orderId) {
         Order order = orderService.getOrderById(orderId);
         return getOrderResponse(order);
     }
+
+    @GetMapping
+    public ResponseEntity <List<OrderResponse>> getAllOrders(
+            @RequestParam (name = "customerId",required = false) String customerId
+            , @RequestParam (name = "productId", required = false) String productId
+    ) {
+        List<Order> orders = orderService.getAllOrders(customerId , productId);
+        List<OrderResponse> responses = orders.stream()
+                .map(this::getOrderResponse).toList();
+        return ResponseEntity.ok(responses);
+    }
+
     private OrderResponse getOrderResponse(Order saved) {
+
         OrderResponse response = new OrderResponse();
         response.setOrderId(saved.getOrderId());
         response.setTimestamp(saved.getTimestamp());
-
 
         if (saved.getCustomer() != null) {
             response.setCustomerId(saved.getCustomer().getCId());
