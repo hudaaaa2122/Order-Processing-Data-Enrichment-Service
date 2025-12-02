@@ -20,15 +20,8 @@ public class OrderController {
 
     @PostMapping
     public OrderResponse createOrder(@RequestBody final OrderRequest payload) {
-
-        Order order = new Order();
-        order.setOrderId(payload.getOrderId());
-        order.setTimestamp(payload.getTimestamp());
-        order.setCustomerId(payload.getCustomerId());
-        order.setProductId(payload.getProductId());
-
+        Order order = getOrder(payload);
         Order saved = orderService.processOrder(order);
-
         return getOrderResponse(saved);
     }
 
@@ -70,6 +63,14 @@ public class OrderController {
             response.setProductTags(saved.getProduct().getProductTags());
         }
         return response;
+    }
+    private static Order getOrder(OrderRequest payload) {
+        Order order = new Order();
+        order.setOrderId(payload.getOrderId());
+        order.setTimestamp(payload.getTimestamp());
+        order.setCustomerId(payload.getCustomerId());
+        order.setProductId(payload.getProductId());
+        return order;
     }
 
 }

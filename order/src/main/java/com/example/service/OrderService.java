@@ -32,16 +32,15 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public void enrichOrder(Order order, Customer customer, Product product) {
-        order.setCustomer(customer);
-        order.setProduct(product);
-    }
-
-
     public List<Order> getAllOrders(String customerId, String productId) {
         Specification<Order> spec = (root, query, cb) -> cb.conjunction();
         if (customerId != null && !customerId.isEmpty()){ spec = spec.and(OrderSpecification.customerById(customerId));}
         if (productId != null && !productId.isEmpty()) {spec = spec.and(OrderSpecification.productById(productId));}
         return orderRepository.findAll(spec);
+    }
+
+    public void enrichOrder(Order order, Customer customer, Product product) {
+        order.setCustomer(customer);
+        order.setProduct(product);
     }
 }
